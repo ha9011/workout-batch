@@ -1,0 +1,24 @@
+# Use root/example as user/password credentials
+version: '3.8' # 도커컴포즈 에러
+
+services:
+  mysql:  # 서비스이름(내가 정해도됨)
+    container_name: mysql_local
+    image: mysql:8.0.30  # mysql 버전
+    # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
+    # (this is just an example, not intended to be a production configuration)
+    #command: --default-authentication-plugin=mysql_native_password
+    #command 인증플러그인 암호화 방식을 변경하는건데 우린 따로 빼둘거임
+    volumes: # 설정파일, 초기데이터 등 도커를 재시작해도 계속 연결을 유지하도록 하는 설정
+      - ./db/conf.d:/etc/mysql/conf.d/ # 커스텀설정파일 위치
+      - ./db/initdb.d:/docker-entrypoint-initdb.d/
+      # 컨테이너가 시작되면 이곳에 sql파일 실행, 파일명 순서대로 실행
+    ports:
+      - "3307:3306"   #클라이언트:Mysql
+    environment:
+      - MYSQL_DATABASE=pass_local
+      - MYSQL_USER=pass_local_user
+      - MYSQL_PASSWORD=1234
+      - MYSQL_ROOT_PASSWORD=1234
+      - TZ=Asia/Seoul
+
