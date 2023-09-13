@@ -1,9 +1,14 @@
 spring:
-  datasource: ## ???? ??? ???? ???, ?? ??? ??? ??? ???? ??? ??? ????? h2 ??
-    url: jdbc:h2:tcp://localhost/~/workout
-    username: sa
+  application:
+    name: pass-batch
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3307/pass_local?zeroDateTimeBehavior=convertToNull&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    username: pass_local_user
     password: 1234
-    driver-class-name: org.h2.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 20
+
   batch:
     jdbc:
       initialize-schema: always
