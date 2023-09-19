@@ -2,6 +2,7 @@ package com.example.workout.repository.user;
 
 
 import com.example.workout.repository.BaseEntity;
+import com.vladmihalcea.hibernate.type.json.JsonStringType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -17,7 +18,7 @@ import java.util.Map;
 @Entity
 @Table(name = "user")
 // json의 타입을 정의합니다.
-//@TypeDef(name = "json", typeClass = JsonStringType.class)
+@TypeDef(name = "json", typeClass = JsonStringType.class)
 public class UserEntity extends BaseEntity {
     @Id
     private String userId;
@@ -28,16 +29,16 @@ public class UserEntity extends BaseEntity {
     private String phone;
 
     // json 형태로 저장되어 있는 문자열 데이터를 Map으로 매핑합니다.
-    //@Type(type = "json")
-    //private Map<String, Object> meta;
+    @Type(type = "json")
+    private Map<String, Object> meta;
 
-//    public String getUuid() {
-//        String uuid = null;
-//        if (meta.containsKey("uuid")) {
-//            uuid = String.valueOf(meta.get("uuid"));
-//        }
-//        return uuid;
-//
-//    }
+    public String getUuid() {
+        String uuid = null;
+        if (meta.containsKey("uuid")) {
+            uuid = String.valueOf(meta.get("uuid"));
+        }
+        return uuid;
+
+    }
 
 }
